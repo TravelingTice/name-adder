@@ -1,7 +1,7 @@
 {
-	"name": "nextjs-express-mongoose-crudify-boilerplate",
+	"name": "nextjs-express",
 	"version": "4.0.0",
-	"description": "Next.js (React) + Redux + Express REST API + Mongoose CRUD boilerplate.",
+	"description": "Next.js and Express.js boilerplate",
 	"main": "server/server.js",
 	"license": "ISC",
 	"scripts": {
@@ -15,8 +15,8 @@
 		"start": "NODE_ENV=production node server/server.js"
 	},
 	"now": {
-		"name": "nextjs-express-mongoose-crudify-boilerplate",
-		"alias": "nextjs-express-mongoose-crudify-boilerplate"
+		"name": "nextjs-express",
+		"alias": "nextjs-express"
 	},
 	"engines": {
 		"node": "^10.13.0",

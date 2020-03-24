@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getNames, addName } from '../actions/name';
+import { getNames, addName, removeName } from '../actions/name';
 
 const IndexPage = () => {
   const [names, setNames] = useState([]);
@@ -12,14 +12,18 @@ const IndexPage = () => {
   const { inputVal, error, success } = values;
 
   useEffect(() => {
+    initNames();
+  }, []);
+
+  const initNames = () => {
     getNames().then(data => {
       if (data.error) {
         setValues({ ...values, error: data.error });
       } else {
         setNames(data);
       }
-    })
-  }, [])
+    });
+  }
 
   const handleChange = name => e => {
     setValues({ ...values, error: '', success: '', [name]: e.target.value });
@@ -32,15 +36,33 @@ const IndexPage = () => {
       if (data.error) {
         setValues({ ...values, error: data.error });
       } else {
-        setValues({ ...values, success: data.message });
+        setValues({ ...values, success: data.message, inputVal: '' });
+        initNames();
       }
     });
   }
 
+  const handleRemove = name => {
+    const answer = window.confirm(`Are you sure you want to delete ${name.name}?`);
+    if (answer) {
+      removeName(name._id).then(data => {
+        if (data.error) {
+          setValues({ ...values, error: data.error })
+        } else {
+          setValues({ ...values, error: '', success: data.message });
+          initNames();
+        }
+      });
+    }
+  }
+
   const showNames = () => (
-    <div>
-      {JSON.stringify(names)}
-    </div>
+    names.map((name, i) => (
+      <div className="d-flex align-items-center justify-content-between border py-1 px-3 my-3">
+        <div>{name.name}</div>
+        <button onClick={() => handleRemove(name)} className="btn btn-outline-danger">Remove</button>
+      </div>
+    ))
   )
 
   const showError = () => error && <div className="alert alert-danger">{error}</div>
@@ -49,7 +71,7 @@ const IndexPage = () => {
   return (
     <>
       <h1>Hi there</h1>
-      <p>Add your names below:</p>]
+      <p>Add your names below:</p>
 
       {showNames()}
 

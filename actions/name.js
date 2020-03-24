@@ -16,3 +16,13 @@ export const addName = name => {
   .then(res => res.json())
   .catch(err => console.log(err))
 }
+
+export const removeName = id => {
+  return fetch(`${API}/names`, {
+    method: 'DELETE',
+    ...config.jsonOptions,
+    body: JSON.stringify({ id })
+  })
+  .then(res => res.json())
+  .catch(err => console.log(err))
+}
