@@ -1,5 +1,5 @@
 import { config } from '../config/config';
-const API = config.appUrl + 'api';
+const API = config.appUrl + config.apiExtension;
 
 export const getNames = () => {
   return fetch(`${API}/names`)
